@@ -104,6 +104,35 @@ export default function App() {
     confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
   };
 
+  const handleAddReview = (newReview) => {
+    setReviews(prev => {
+      const updated = [newReview, ...prev];
+      try { localStorage.setItem('zerolapar_reviews', JSON.stringify(updated)); } catch(e) {}
+      return updated;
+    });
+
+    // Update merchant rating dynamically
+    setMerchants(prev => prev.map(m => {
+      if (m.id === newReview.merchantId || m.name === newReview.merchantName) {
+        const currentCount = m.totalReviews || 1;
+        const currentRating = Number(m.rating) || 4.8;
+        const newRating = Number(((currentRating * currentCount + newReview.rating) / (currentCount + 1)).toFixed(1));
+        return {
+          ...m,
+          rating: newRating,
+          totalReviews: currentCount + 1
+        };
+      }
+      return m;
+    }));
+
+    setGlobalBanner({
+      type: 'success',
+      text: 'Terima kasih! Penilaian ' + newReview.rating + ' bintang kepada ' + newReview.merchantName + ' berjaya dihantar.'
+    });
+    setTimeout(() => setGlobalBanner(null), 5000);
+  };
+
   const handleProfileUpdated = (updatedUser) => {
     setCurrentUser(updatedUser);
     localStorage.setItem('zerolapar_current_user', JSON.stringify(updatedUser));
