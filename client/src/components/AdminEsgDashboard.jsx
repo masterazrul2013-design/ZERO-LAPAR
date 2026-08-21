@@ -77,20 +77,28 @@ export default function AdminEsgDashboard({
     fetchUsers();
   }, []);
 
-  const dataSummary = stats || {
-    mealsRescued: 1188,
-    foodWasteKg: 594,
-    co2SavedKg: 1485,
-    totalRevenueRecovered: 5940.00
+  // Calculate live dynamic metrics from actual real data
+  const completedRes = (items || []).flatMap(() => []).concat(stats?.completedReservations || []);
+  
+  const liveMeals = stats?.mealsRescued ?? (stats?.totalMealsRescued ?? 0);
+  const liveWasteKg = stats?.foodWasteKg ?? (stats?.totalFoodWasteKg ?? (liveMeals * 0.45));
+  const liveCo2 = stats?.co2SavedKg ?? (stats?.totalCO2eSavedKg ?? (liveWasteKg * 2.5));
+  const liveRevenue = stats?.totalRevenueRecovered ?? (stats?.totalRevenueRecoveredMYR ?? 0);
+
+  const dataSummary = {
+    mealsRescued: Number(liveMeals) || 0,
+    foodWasteKg: Number(Number(liveWasteKg).toFixed(1)) || 0,
+    co2SavedKg: Number(Number(liveCo2).toFixed(1)) || 0,
+    totalRevenueRecovered: Number(Number(liveRevenue).toFixed(2)) || 0
   };
 
   const monthlyImpactData = [
-    { month: 'Jan', meals: 120, wasteKg: 54, co2: 135, revenue: 600 },
-    { month: 'Feb', meals: 180, wasteKg: 81, co2: 202, revenue: 900 },
-    { month: 'Mac', meals: 240, wasteKg: 108, co2: 270, revenue: 1200 },
-    { month: 'Apr', meals: 310, wasteKg: 139, co2: 348, revenue: 1550 },
-    { month: 'Mei', meals: 450, wasteKg: 202, co2: 505, revenue: 2250 },
-    { month: 'Jun (PYIC)', meals: dataSummary.mealsRescued || 1188, wasteKg: dataSummary.foodWasteKg || 594, co2: dataSummary.co2SavedKg || 1485, revenue: dataSummary.totalRevenueRecovered || 5940 }
+    { month: 'Jan', meals: 0, wasteKg: 0, co2: 0, revenue: 0 },
+    { month: 'Feb', meals: 0, wasteKg: 0, co2: 0, revenue: 0 },
+    { month: 'Mac', meals: 0, wasteKg: 0, co2: 0, revenue: 0 },
+    { month: 'Apr', meals: 0, wasteKg: 0, co2: 0, revenue: 0 },
+    { month: 'Mei', meals: 0, wasteKg: 0, co2: 0, revenue: 0 },
+    { month: 'Semasa (PYIC)', meals: dataSummary.mealsRescued, wasteKg: dataSummary.foodWasteKg, co2: dataSummary.co2SavedKg, revenue: dataSummary.totalRevenueRecovered }
   ];
 
   // Food item edit handler (Reactive & Instant)

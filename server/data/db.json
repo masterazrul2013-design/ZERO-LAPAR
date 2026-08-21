@@ -673,15 +673,15 @@
     }
   ],
   "statsSummary": {
-    "totalMealsRescued": 4370,
-    "totalFoodWasteKg": 2184.4,
-    "totalCO2eSavedKg": 5461,
-    "totalRevenueRecoveredMYR": 32470,
-    "totalPeopleHelped": 3189,
-    "mealsRescued": 4399,
-    "foodWasteKg": 2197.3,
-    "co2SavedKg": 5493.5,
-    "totalRevenueRecovered": 32565
+    "mealsRescued": 0,
+    "foodWasteKg": 0,
+    "co2SavedKg": 0,
+    "totalRevenueRecovered": 0,
+    "totalMealsRescued": 0,
+    "totalFoodWasteKg": 0,
+    "totalCO2eSavedKg": 0,
+    "totalRevenueRecoveredMYR": 0,
+    "totalPeopleHelped": 0
   },
   "users": [
     {
