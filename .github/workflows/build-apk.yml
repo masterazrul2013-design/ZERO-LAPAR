@@ -19,38 +19,33 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Set up Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install Client Dependencies & Build Web Assets
+      - name: Build Web Frontend
         run: |
           cd client
-          npm ci
+          npm install
           npm run build
 
-      - name: Install Capacitor CLI & Core
+      - name: Install Capacitor & Generate Android Project
         run: |
-          npm install @capacitor/core @capacitor/cli @capacitor/android
-
-      - name: Initialize & Sync Capacitor Android
-        run: |
+          cd client
+          npm install @capacitor/core@latest @capacitor/cli@latest @capacitor/android@latest
           npx cap add android || true
           npx cap sync android
 
-      - name: Build Android Debug APK with Gradle
+      - name: Build Android APK with Gradle
         run: |
-          cd android
+          cd client/android
           chmod +x ./gradlew
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --no-daemon
 
       - name: Upload Downloadable APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ZeroLapar-PYIC2026-App
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: ZeroLapar-PYIC2026-Android-APK
+          path: client/android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30

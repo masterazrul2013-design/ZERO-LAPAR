@@ -1,7 +1,7 @@
 {
   "appId": "com.pmtg.zerolapar",
   "appName": "Zero Lapar",
-  "webDir": "client/dist",
+  "webDir": "dist",
   "server": {
     "androidScheme": "https"
   }
