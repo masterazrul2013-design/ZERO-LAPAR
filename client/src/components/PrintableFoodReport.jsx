@@ -1,3 +1,4 @@
+import zeroLaparLogo from '../assets/logo.png';
 import React, { useState } from 'react';
 import { 
   Printer, 
@@ -196,7 +197,7 @@ export default function PrintableFoodReport({
         {/* Printable Official Header */}
         <div className="border-b-2 border-slate-900 pb-5 flex justify-between items-start">
           <div className="flex items-center space-x-3.5">
-            <img src="/logo.png" alt="Zero Lapar" className="w-14 h-14 object-contain" />
+            <img src={zeroLaparLogo} alt="Zero Lapar" className="w-14 h-14 object-contain" />
             <div>
               <div className="text-xl font-black text-slate-900 tracking-tight">
                 ZERO<span className="text-emerald-600">LAPAR</span> PLATFORM (PYIC 2026)

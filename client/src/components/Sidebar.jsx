@@ -1,3 +1,4 @@
+import zeroLaparLogo from '../assets/logo.png';
 import React from 'react';
 import { 
   Utensils, 
@@ -85,7 +86,7 @@ export default function Sidebar({
         {!isCollapsed ? (
           <div className="flex items-center space-x-2.5 overflow-hidden">
             <img 
-              src="/logo.png" 
+              src={zeroLaparLogo} 
               alt="Zero Lapar Logo" 
               className="w-11 h-11 object-contain flex-shrink-0 rounded-xl filter drop-shadow" 
             />
@@ -106,7 +107,7 @@ export default function Sidebar({
         ) : (
           <div className="mx-auto">
             <img 
-              src="/logo.png" 
+              src={zeroLaparLogo} 
               alt="Zero Lapar Logo" 
               className="w-10 h-10 object-contain rounded-xl filter drop-shadow" 
             />

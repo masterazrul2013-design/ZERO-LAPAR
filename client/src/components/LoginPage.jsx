@@ -1,3 +1,4 @@
+import zeroLaparLogo from '../assets/logo.png';
 import React, { useState } from 'react';
 import { 
   Lock, 
@@ -152,7 +153,7 @@ export default function LoginPage({ onLoginSuccess, onOpenManual }) {
 
         <div className="flex items-center justify-center pt-2">
           <img 
-            src="/logo.png" 
+            src={zeroLaparLogo} 
             alt="Zero Lapar - Less Waste. More Meals. More Impact." 
             className="w-48 sm:w-56 h-auto object-contain filter drop-shadow-xl hover:scale-105 transition-transform" 
           />
