@@ -293,7 +293,7 @@ export default function AdminEsgDashboard({
               </div>
               <div className="space-y-1">
                 <div className="text-3xl font-black text-slate-900">
-                  {dataSummary.mealsRescued || 1188} Pek
+                  {dataSummary.mealsRescued ?? 0} Pek
                 </div>
                 <div className="text-xs text-slate-500 font-medium">Hidangan Diselamatkan & Diedar</div>
               </div>
@@ -312,9 +312,9 @@ export default function AdminEsgDashboard({
               </div>
               <div className="space-y-1">
                 <div className="text-3xl font-black text-emerald-700">
-                  {dataSummary.co2SavedKg || 1485} kg CO₂e
+                  {dataSummary.co2SavedKg ?? 0} kg CO₂e
                 </div>
-                <div className="text-xs text-slate-500 font-medium">Pelepasan GHG Dielakkan ({dataSummary.foodWasteKg || 594} kg sisa)</div>
+                <div className="text-xs text-slate-500 font-medium">Pelepasan GHG Dielakkan ({dataSummary.foodWasteKg ?? 0} kg sisa)</div>
               </div>
               <div className="text-xs text-slate-600 pt-3 border-t border-slate-100">
                 Menghalang sisa organik dari tapak pelupusan sampah bagi mengurangkan gas metana.

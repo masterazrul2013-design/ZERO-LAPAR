@@ -3,10 +3,10 @@ import { Utensils, Scale, CloudRain, DollarSign } from 'lucide-react';
 
 export default function LiveImpactTicker({ stats }) {
   const s = stats || {
-    totalMealsRescued: 1188,
-    totalFoodWasteKg: 594,
-    totalCO2eSavedKg: 1485,
-    totalRevenueRecoveredMYR: 5940
+    totalMealsRescued: 0,
+    totalFoodWasteKg: 0,
+    totalCO2eSavedKg: 0,
+    totalRevenueRecoveredMYR: 0
   };
 
   const meals = Number(s.totalMealsRescued || s.mealsRescued || 0);
