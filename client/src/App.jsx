@@ -608,22 +608,58 @@ export default function App() {
           {/* 4. ADMIN ESG DASHBOARD & MASTER CONTROLS */}
           {currentUser.role === 'admin' && (
             <div>
-              {adminViewRole === 'admin_dashboard' && (
+              {(adminViewRole === 'admin_dashboard' || adminViewRole === 'admin_food' || adminViewRole === 'admin_users' || adminViewRole === 'admin_merchants') && (
                 <AdminEsgDashboard 
                   stats={stats}
                   merchants={merchants}
                   items={items}
+                  initialTab={adminViewRole === 'admin_food' ? 'food_mgmt' : (adminViewRole === 'admin_users' ? 'users_mgmt' : 'esg')}
                   onRefreshData={fetchData}
                   onEditItem={handleEditItem}
                   onDeleteItem={handleDeleteItem}
                 />
               )}
-              {adminViewRole === 'report' && (
+              {(adminViewRole === 'admin_reports' || adminViewRole === 'report') && (
                 <PrintableFoodReport 
                   items={items}
                   donations={donations}
                   reservations={reservations}
                   merchants={merchants}
+                />
+              )}
+              {adminViewRole === 'consumer' && (
+                <ConsumerPortal 
+                  items={items}
+                  merchants={merchants}
+                  dropoffPoints={dropoffPoints}
+                  currentUser={currentUser}
+                  onReserveItem={handleReserveItem}
+                  onAddReview={handleAddReview}
+                  onOpenTickets={() => setIsTicketsModalOpen(true)}
+                  onEditItem={handleEditItem}
+                  onDeleteItem={handleDeleteItem}
+                />
+              )}
+              {adminViewRole === 'merchant' && (
+                <MerchantPortal 
+                  items={items}
+                  merchants={merchants}
+                  reservations={reservations}
+                  reviews={reviews}
+                  currentUser={currentUser}
+                  onAddNewItem={handleAddNewItem}
+                  onVerifyQrCode={handleVerifyQrCode}
+                  onUpgradePlan={handleUpgradePlan}
+                  activeMerchantTab={merchantActiveTab}
+                  setActiveMerchantTab={setMerchantActiveTab}
+                />
+              )}
+              {adminViewRole === 'ngo' && (
+                <NgoPortal 
+                  donations={donations}
+                  dropoffPoints={dropoffPoints}
+                  currentUser={currentUser}
+                  onClaimDonation={handleClaimDonation}
                 />
               )}
               {adminViewRole === 'pitch' && (

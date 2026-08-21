@@ -61,11 +61,46 @@ export default function AdminEsgDashboard({
   const [editingItem, setEditingItem] = useState(null);
   const [actionNotice, setActionNotice] = useState('');
 
+  const defaultSeedUsers = [
+    {
+      id: 'u_student_1',
+      name: 'Mohd Danial (Pelajar DIT PMTG)',
+      email: 'danial@pmtg.edu.my',
+      role: 'consumer',
+      roleLabel: 'Pelajar / Pengguna (DIT PMTG)',
+      phone: '+6018-2948192',
+      institution: 'Politeknik METrO Tasek Gelugor'
+    },
+    {
+      id: 'u_merchant_1',
+      name: 'Restoran Selera Kampus',
+      email: 'selera@pmtg.edu.my',
+      role: 'merchant',
+      roleLabel: 'Peniaga Makanan (Selera Kampus)',
+      phone: '+6012-3456789',
+      institution: 'Politeknik METrO Tasek Gelugor'
+    },
+    {
+      id: 'u_ngo_1',
+      name: 'Persatuan Sukarelawan FoodBank Tasek Gelugor',
+      email: 'ngo@pmtg.edu.my',
+      role: 'ngo',
+      roleLabel: 'NGO & Sukarelawan Makanan',
+      phone: '+6019-3344556',
+      institution: 'Politeknik METrO Tasek Gelugor'
+    }
+  ];
+
   const fetchUsers = async () => {
     try {
+      const saved = localStorage.getItem('zerolapar_registered_users');
+      const custom = saved ? JSON.parse(saved) : [];
+      const combined = [...custom, ...defaultSeedUsers.filter(s => !custom.some(c => c.email === s.email))];
+      setAllUsers(combined);
+
       const res = await fetch('/api/auth/all-users');
       const data = await res.json().catch(() => null);
-      if (data && data.success) {
+      if (data && data.success && Array.isArray(data.users) && data.users.length > 0) {
         setAllUsers(data.users);
       }
     } catch (e) {
