@@ -1,3 +1,4 @@
+import MerchantRatingModal from './MerchantRatingModal';
 import React, { useState } from 'react';
 import { 
   Search, 
@@ -22,7 +23,8 @@ import {
 } from 'lucide-react';
 import LeafletMap from './LeafletMap';
 
-export default function ConsumerPortal({ 
+export default function ConsumerPortal({
+  onAddReview, 
   items = [], 
   merchants = [], 
   dropoffPoints = [],
@@ -46,6 +48,7 @@ export default function ConsumerPortal({
 
   // Inline Admin Edit Modal State
   const [adminEditingItem, setAdminEditingItem] = useState(null);
+  const [ratingModalMerchant, setRatingModalMerchant] = useState(null);
 
   const isAdmin = currentUser?.role === 'admin';
   const categories = ['ALL', 'Rice Meal', 'Bakery', 'Groceries', 'Buffet Surplus'];
@@ -319,6 +322,16 @@ export default function ConsumerPortal({
                           <Building className="w-3.5 h-3.5" />
                           <span>{item.merchantName}</span>
                         </span>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setRatingModalMerchant({ id: item.merchantId || 'm_1', name: item.merchantName });
+                          }}
+                          className="inline-flex items-center space-x-1 bg-amber-500 hover:bg-amber-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full shadow transition"
+                        >
+                          <span>⭐ Nilai Peniaga</span>
+                        </button>
                       </div>
                     </div>
 

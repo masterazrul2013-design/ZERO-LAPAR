@@ -33,6 +33,12 @@ export default function App() {
   const [donations, setDonations] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [stats, setStats] = useState(null);
+  const [reviews, setReviews] = useState(() => {
+    try {
+      const saved = localStorage.getItem('zerolapar_reviews');
+      return saved ? JSON.parse(saved) : [];
+    } catch(e) { return []; }
+  });
 
   // Fetch all shared data from server
   const fetchData = async () => {
@@ -337,6 +343,7 @@ export default function App() {
               dropoffPoints={dropoffPoints}
               currentUser={currentUser}
               onReserveItem={handleReserveItem}
+                onAddReview={handleAddReview}
               onOpenTickets={() => setIsTicketsModalOpen(true)}
               onEditItem={handleEditItem}
               onDeleteItem={handleDeleteItem}

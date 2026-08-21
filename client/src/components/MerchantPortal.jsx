@@ -38,7 +38,8 @@ const safeNum = (val, fallback = 0) => {
   return Number.isFinite(n) ? n : fallback;
 };
 
-export default function MerchantPortal({ 
+export default function MerchantPortal({
+  reviews = [], 
   items = [], 
   merchants = [], 
   reservations = [],
