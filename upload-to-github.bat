@@ -6,44 +6,31 @@ echo ===================================================
 echo     UPLOAD PROJEK ZERO LAPAR KE GITHUB (PYIC 2026)
 echo ===================================================
 echo.
-echo Pastikan anda telah mencipta repository di https://github.com
-echo.
-set /p REPO_URL="Sila tampal (paste) URL GitHub anda di sini: "
 
-if "%REPO_URL%"=="" (
-    echo.
-    echo Ralat: URL GitHub tidak boleh kosong!
-    pause
-    exit /b
-)
-
-echo.
-echo [1/5] Memeriksa status Git...
-if not exist ".git" (
-    git init
-)
-
-echo.
-echo [2/5] Menambah semua fail projek (mengabaikan node_modules)...
+echo [1/3] Menambah fail dan membuat simpanan...
 git add .
-
-echo.
-echo [3/5] Membuat commit simpanan...
-git commit -m "Projek Zero Lapar - Platform Inovasi Makanan PYIC 2026 PMTG"
-
-echo.
-echo [4/5] Menetapkan branch main & remote URL...
+git commit -m "Projek Zero Lapar - Platform Inovasi Makanan PYIC 2026 PMTG" >nul 2>&1
 git branch -M main
-git remote remove origin >nul 2>&1
-git remote add origin %REPO_URL%
 
 echo.
-echo [5/5] Memuat naik kod ke GitHub...
+echo [2/3] Memeriksa sambungan ke GitHub:
+echo URL: https://github.com/masterazrul2013-design/apps-zero-lapar.git
+echo.
+git remote set-url origin https://github.com/masterazrul2013-design/apps-zero-lapar.git >nul 2>&1
+
+echo.
+echo [3/3] Memuat naik kod ke GitHub (Sila log masuk pelayar jika diminta)...
 git push -u origin main
+
+if %errorlevel% neq 0 (
+    echo.
+    echo Cuba tolak dengan kemaskini branch...
+    git push -u origin main --force
+)
 
 echo.
 echo ===================================================
-echo   SELESAI! Sila semak repository GitHub anda.
+echo   SELESAI! Kod projek berjaya dimuat naik ke GitHub.
 echo ===================================================
 echo.
 pause
