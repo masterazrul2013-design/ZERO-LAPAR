@@ -1,0 +1,13 @@
+{
+  "appId": "com.pmtg.zerolapar",
+  "appName": "Zero Lapar",
+  "webDir": "client/dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}
