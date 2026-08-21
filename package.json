@@ -1,0 +1,19 @@
+{
+  "name": "zero-lapar",
+  "version": "1.0.0",
+  "description": "Zero Lapar - The Digital Food Redistribution Platform (PYIC 2026)",
+  "scripts": {
+    "install-all": "npm --prefix server install && npm --prefix client install",
+    "start": "node server/index.js",
+    "dev:server": "node --watch server/index.js",
+    "dev:client": "npm --prefix client run dev",
+    "build:client": "npm --prefix client run build"
+  },
+  "keywords": [
+    "food-waste",
+    "esg",
+    "redistribution",
+    "pyic2026"
+  ],
+  "author": "Politeknik METrO Tasek Gelugor"
+}
