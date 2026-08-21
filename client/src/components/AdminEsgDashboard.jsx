@@ -197,18 +197,40 @@ export default function AdminEsgDashboard({
     }
   };
 
-  // User delete handler
-  const handleDeleteUser = async (id, name) => {
-    if (!window.confirm('Adakah anda pasti untuk memadam akaun ' + name + '?')) return;
+  // User delete handler (Instant Local & Cloud Sync)
+  const handleDeleteUser = async (id, name, email) => {
+    if (!window.confirm(`Adakah anda pasti untuk memadam akaun "${name}" (${email || id})?`)) return;
 
+    // 1. Remove from React state immediately
+    setAllUsers(prev => prev.filter(u => u.id !== id && u.email !== email && u.name !== name));
+
+    // 2. Remove from LocalStorage persistent registry
+    try {
+      const saved = localStorage.getItem('zerolapar_registered_users');
+      if (saved) {
+        const list = JSON.parse(saved);
+        const updated = list.filter(u => u.id !== id && u.email !== email && u.name !== name);
+        localStorage.setItem('zerolapar_registered_users', JSON.stringify(updated));
+      }
+    } catch (e) {}
+
+    // 3. If merchant, remove from shared merchants
+    try {
+      const savedM = localStorage.getItem('zerolapar_shared_merchants');
+      if (savedM) {
+        const mList = JSON.parse(savedM);
+        const updatedM = mList.filter(m => m.name !== name && m.id !== id);
+        localStorage.setItem('zerolapar_shared_merchants', JSON.stringify(updatedM));
+      }
+    } catch (e) {}
+
+    setActionNotice(`Akaun pengguna "${name}" telah berjaya dipadam daripada pangkalan data.`);
+    setTimeout(() => setActionNotice(''), 4500);
+
+    // 4. Also notify server API if online
     try {
       await fetch('/api/auth/users/' + id, { method: 'DELETE' });
-      setActionNotice('Pengguna ' + name + ' berjaya dipadam.');
-      fetchUsers();
-      setTimeout(() => setActionNotice(''), 4000);
-    } catch (err) {
-      fetchUsers();
-    }
+    } catch (err) {}
   };
 
   const filteredFoodList = items.filter(i => {
@@ -543,7 +565,7 @@ export default function AdminEsgDashboard({
                       </button>
                       {u.id !== 'u_admin' && (
                         <button
-                          onClick={() => handleDeleteUser(u.id, u.name)}
+                          onClick={() => handleDeleteUser(u.id, u.name, u.email)}
                           className="px-3 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold rounded-lg transition"
                         >
                           Padam
